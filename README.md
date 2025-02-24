@@ -75,7 +75,7 @@ The built in logger uses a simple HTML page to display the logs.
 ```cs
 using static LeviLog; // Add this where ever you want to use LeviLog
 
-public class TestWebLogger : WebDocument; // Create a new logger that inherits from WebConsole
+public class TestWebLogger : WebDocument; // Create a new logger that inherits from WebDocument
 
 public class Test
 {
