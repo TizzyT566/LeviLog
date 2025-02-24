@@ -178,7 +178,7 @@ public static class LeviLog
                 string msg = $"data: {logger.Encode(obj)}\n\n";
                 if (_debug)
                 {
-                    Console.WriteLine($"DEBUG::Log\n{msg}");
+                    Console.WriteLine($"DEBUG::Out\n{msg}");
                 }
                 byte[] data = Encoding.UTF8.GetBytes(msg);
                 logger.Stream.OutputStream.Write(data, 0, data.Length);
@@ -207,7 +207,7 @@ public static class LeviLog
                 string msg = $"data: {logger.Encode(obj)}\n\n";
                 if (_debug)
                 {
-                    Console.WriteLine($"DEBUG::LogAsync\n{msg}");
+                    Console.WriteLine($"DEBUG::OutAsync\n{msg}");
                 }
                 byte[] data = Encoding.UTF8.GetBytes(msg);
                 await logger.Stream.OutputStream.WriteAsync(data, 0, data.Length);
