@@ -64,10 +64,13 @@ public static partial class LeviLog
                         const terminal = document.getElementById("terminal");
                         const capacity = 2500;
                         const batch = 250;
+                        const maxTries = 3;
+                        let tries = 0;
                         let messages = 0;
                         let crnt_batch;
                         event_source.onmessage = function(event)
                         {
+                            tries = 0;
                             const atBottom = document.body.scrollHeight - window.scrollY <= window.innerHeight + 1;
                             const msg = atob(event.data);
                             if (messages % batch == 0)
@@ -90,6 +93,18 @@ public static partial class LeviLog
                             if (atBottom)
                             {
                                 scrollToBottom();
+                            }
+                        };
+                        event_source.onerror = function(event)
+                        {
+                            if (tries < maxTries)
+                            {
+                                tries++;
+                            }
+                            else
+                            {
+                                event_source.close();
+                                console.log("Logger closed, retries exhausted.");
                             }
                         };
                         function scrollToBottom()

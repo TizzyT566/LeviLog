@@ -16,9 +16,24 @@ public static partial class LeviLog
                 <body>
                     <script>
                         const event_source = new EventSource("http://localhost:$LEVILOGGER_LOGGER_PORT$/$LEVILOGGER_LOGGER_NAME$/$LEVILOGGER_SESSION_ID$");
+                        const maxTries = 3;
+                        let tries = 0;
                         event_source.onmessage = function(event)
                         {
+                            tries = 0;
                             console.log(atob(event.data));
+                        };
+                        event_source.onerror = function(event)
+                        {
+                            if (tries < maxTries)
+                            {
+                                tries++;
+                            }
+                            else
+                            {
+                                event_source.close();
+                                console.log("Logger closed, retries exhausted.");
+                            }
                         };
                     </script>
                 </body>

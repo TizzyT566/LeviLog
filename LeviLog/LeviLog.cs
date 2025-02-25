@@ -34,7 +34,7 @@ public static partial class LeviLog
         _debug = debug;
 
         Type recordType = typeof(LoggerBase);
-        Dictionary<string, LoggerBase> loggers = [];
+        SortedDictionary<string, LoggerBase> loggers = [];
         foreach (Type type in Assembly.GetEntryAssembly().GetTypes())
         {
             if (!type.IsAbstract && recordType.IsAssignableFrom(type) && !string.IsNullOrEmpty(type.FullName))

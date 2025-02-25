@@ -47,7 +47,7 @@ class LeviLog_Test
         {
             Log<FirstLogger>(counter++);
             Log<SecondLogger>(counter++);
-            Log<FancyLogger>((DateTime.Now, Color.LimeGreen), " \n", (counter, Color.FromArgb(255, 133, 240, 128)), "\n", counter);
+            await LogAsync<FancyLogger>((DateTime.Now, Color.LimeGreen), " \n", (counter, Color.FromArgb(255, 133, 240, 128)), "\n", counter);
             await Task.Delay(1000);
         }
     }
