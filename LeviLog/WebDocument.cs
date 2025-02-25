@@ -64,7 +64,7 @@ public static partial class LeviLog
                         const terminal = document.getElementById("terminal");
                         const capacity = 2500;
                         const batch = 250;
-                        const maxTries = 3;
+                        const max_tries = 3;
                         let tries = 0;
                         let messages = 0;
                         let crnt_batch;
@@ -97,7 +97,7 @@ public static partial class LeviLog
                         };
                         event_source.onerror = function(event)
                         {
-                            if (tries < maxTries)
+                            if (tries < max_tries)
                             {
                                 tries++;
                             }

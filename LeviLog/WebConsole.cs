@@ -16,7 +16,7 @@ public static partial class LeviLog
                 <body>
                     <script>
                         const event_source = new EventSource("http://localhost:$LEVILOGGER_LOGGER_PORT$/$LEVILOGGER_LOGGER_NAME$/$LEVILOGGER_SESSION_ID$");
-                        const maxTries = 3;
+                        const max_tries = 3;
                         let tries = 0;
                         event_source.onmessage = function(event)
                         {
@@ -25,7 +25,7 @@ public static partial class LeviLog
                         };
                         event_source.onerror = function(event)
                         {
-                            if (tries < maxTries)
+                            if (tries < max_tries)
                             {
                                 tries++;
                             }
