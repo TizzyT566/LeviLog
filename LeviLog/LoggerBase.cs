@@ -8,7 +8,7 @@ public static partial class LeviLog
         internal int _lock = 0;
 
         internal Guid _sessionId = Guid.Empty;
-        internal HttpListenerResponse? Stream = null!; // strangely renaming this to anything other than Stream changes the behavior
+        internal HttpListenerResponse? _resp = null!;
 
         public abstract string HTML();
         public abstract string Encode(params object[] obj);

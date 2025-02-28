@@ -115,8 +115,8 @@ public static partial class LeviLog
 
                     while (Interlocked.CompareExchange(ref logger._lock, 1, 0) == 1) ;
 
-                    logger.Stream?.Close();
-                    logger.Stream = null;
+                    logger._resp?.Close();
+                    logger._resp = null;
 
                     byte[] bytes = Encoding.UTF8.GetBytes(logger.HTML()
                         .Replace("$LEVILOGGER_LOGGER_PORT$", _port.ToString())
@@ -145,7 +145,7 @@ public static partial class LeviLog
 
                     if (context.Request.Url.Segments[2].Trim('/') == logger._sessionId.ToString())
                     {
-                        logger.Stream = response;
+                        logger._resp = response;
                     }
                     else
                     {
@@ -171,7 +171,7 @@ public static partial class LeviLog
 
         while (Interlocked.CompareExchange(ref logger._lock, 1, 0) == 1) ;
 
-        if (logger.Stream is not null)
+        if (logger._resp is not null)
         {
             try
             {
@@ -181,13 +181,13 @@ public static partial class LeviLog
                     Console.WriteLine($"DEBUG::Out\n{msg}");
                 }
                 byte[] data = Encoding.UTF8.GetBytes(msg);
-                logger.Stream.OutputStream.Write(data, 0, data.Length);
-                logger.Stream.OutputStream.Flush();
+                logger._resp.OutputStream.Write(data, 0, data.Length);
+                logger._resp.OutputStream.Flush();
             }
             catch (Exception)
             {
-                logger.Stream?.Close();
-                logger.Stream = null!;
+                logger._resp?.Close();
+                logger._resp = null!;
             }
         }
 
@@ -200,7 +200,7 @@ public static partial class LeviLog
 
         while (Interlocked.CompareExchange(ref logger._lock, 1, 0) == 1) ;
 
-        if (logger.Stream is not null)
+        if (logger._resp is not null)
         {
             try
             {
@@ -210,13 +210,13 @@ public static partial class LeviLog
                     Console.WriteLine($"DEBUG::OutAsync\n{msg}");
                 }
                 byte[] data = Encoding.UTF8.GetBytes(msg);
-                await logger.Stream.OutputStream.WriteAsync(data, 0, data.Length);
-                await logger.Stream.OutputStream.FlushAsync();
+                await logger._resp.OutputStream.WriteAsync(data, 0, data.Length);
+                await logger._resp.OutputStream.FlushAsync();
             }
             catch (Exception)
             {
-                logger.Stream?.Close();
-                logger.Stream = null!;
+                logger._resp?.Close();
+                logger._resp = null!;
             }
         }
 
